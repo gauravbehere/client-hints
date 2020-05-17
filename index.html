@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body onload="getUAInfoLocally()">
+  <script>
+    let UAObj = {};
+    const getUAInfoLocally = () => {
+      const UADataFromBrowser = navigator.userAgentData;
+      UAObj = {
+        isMobile: UADataFromBrowser.mobile,
+        clientBrand: UADataFromBrowser.brands[0].brand,
+        clientVersion: UADataFromBrowser.brands[0].version
+      }
+      UADataFromBrowser.getHighEntropyValues([
+        "platform",
+        "platformVersion",
+        "architecture",
+        "model",
+        "uaFullVersion"
+      ]).then(res => {
+        UAObj.architecture = res.architecture;
+        UAObj.model = res.model;
+        UAObj.platform = res.platform;
+        UAObj.uaFullVersion = res.uaFullVersion;
+        UAObj.platformVersion = res.platformVersion;
+        document.querySelector('#ua-info').innerHTML = JSON.stringify(UAObj);
+      });
+    }
+
+    const triggerDummyCall = () => {
+      fetch('http://localhost:4002/firstAPI');
+    }
+
+    const triggerSecondCall = () => {
+      fetch('http://localhost:4002/secondAPI');
+    }
+
+    const postUAInfo = () => {
+      fetch('http://localhost:4002/postUA', {
+        method: 'POST',
+        body: JSON.stringify(UAObj),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+    }
+  </script>
+  <div id='ua-info'></div>
+  <br />
+  <br />
+  <button onclick="triggerDummyCall()">Send a dummy call to get ACCEPT CH Headers</button>
+  <br />
+  <button onclick="triggerSecondCall()">Send a subsequent call to send CH Headers</button>
+  <br />
+  <button onclick="postUAInfo()">Send UA info from JS</button>
+</body>
+
+</html>
