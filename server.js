@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 /**
- * FPTI can have a dummy call just to set the CH headers as the first call
+ * Dummy call just to set the CH headers as the first call
  */
 app.get('/firstAPI', (req, res) => {
   res.header('ACCEPT-CH', "UA-Full-Version, UA-Mobile, UA-Model, UA-Arch, UA-Platform, ECT, Device-Memory, RTT");
@@ -53,14 +53,8 @@ app.post('/postUA', (req, res) => {
 //     console.log('Server Started : https://localhost:' + PORT);
 //   });
 
-// For some strange reason in canary, Version 84.0.4137.2 (Official Build) canary (64-bit)
+// For some reason in canary, Version 84.0.4137.2 (Official Build) canary (64-bit)
 // CH headers are not passed back from browser over https, starting a http server
 app.listen(PORT, () => {
     console.log('Server Started : http://localhost:'+ PORT);
 });
-
-
-// These tags needs investigation: (These were mined using UA string by DeviceAtlus)
-// BOT: true/false
-// Device Type: ipad etc
-// OS Type, version (Check if sec-ch-ua-platform serves the same purpose)
