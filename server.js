@@ -45,6 +45,9 @@ app.post('/postUA', (req, res) => {
   res.sendStatus(200);
 });
 
+// You can generate your ssl cert & key using the below command
+// openssl req -nodes -new -x509 -keyout server.key -out server.cert
+
 // https.createServer({
 //   key: fs.readFileSync('ssl-cert/server.key'),
 //   cert: fs.readFileSync('ssl-cert/server.cert')
